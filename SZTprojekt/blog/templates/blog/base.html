@@ -1,0 +1,33 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Blog Szalonych Dziewic</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+<body>
+    <div class="page-header">
+            {% if user.is_authenticated %}
+            <span><a href="http://localhost:8000/accounts/logout" class="top-menu" style="font-size: 16px">Logout</a><br><br></span>
+            {% else %}
+            <span><a href="http://localhost:8000/accounts/login" class="top-menu" style="font-size: 16px">Login</a><br><br></span>
+            {% endif %}
+            {% if request.user.groups.all.0.name == 'Redaktorzy' or request.user.username == 'admin' %}
+            <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus" style="color: #FF6666"></span></a>
+            {% endif %}
+
+        <h1><a href="/">Blog Szalonych Dziewic</a></h1>
+
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
